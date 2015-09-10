@@ -22,10 +22,14 @@ var jst = require('gulp-cmd-jst');
 gulp.task('jst', function() {
     gulp.src('input/*.html')
         .pipe(jst({
-                cmd : true,
+                cmd : true,//cmd amd
                 output: "html",//默认 返回可执行函数
-                prettify : true,
-                namespace : false
+                prettify : true,//压缩为一行
+                namespace : false,
+				//设置underscore.js template分割符为{{ }}
+				evaluate: /##([\s\S]+?)##/g,
+                interpolate: /\{\{(.+?)\}\}/g,
+                escape: /\{\{\{\{-([\s\S]+?)\}\}\}\}/g
             }
         ))
         .pipe(gulp.dest('./output'));
