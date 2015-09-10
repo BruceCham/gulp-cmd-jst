@@ -19,11 +19,16 @@ module.exports = function(options) {
         if( options.prettify){
           fileContent = fileContent.replace(new RegExp('\n', 'g'), '');
         }
-        if(options.cmd && options.namespace === false){
-          fileContent = 'return ' + fileContent + '()';
+        if((options.cmd || options.amd) && options.namespace === false){
+          if(options.output === "html"){
+            fileContent = 'return ' + fileContent + '()';
+          }else{
+            fileContent = 'return ' + fileContent;
+          }
         }
-        if(fileContent.length > 1 && options.cmd){
-          fileContent = "define(function(require, exports, module){" + fileContent + "});";
+        if(fileContent.length > 1 && (options.cmd || options.amd)){
+          var prarms = options.cmd ? "require, exports, module":"";
+          fileContent = "define(function("+ prarms +"){" + fileContent + "});";
         }
         file.contents = new Buffer(fileContent);
         file.path = gutil.replaceExtension(file.path, ".js");
