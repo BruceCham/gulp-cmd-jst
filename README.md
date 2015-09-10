@@ -1,4 +1,4 @@
-gulp-cmd-jst [![Build Status](https://travis-ci.org/brucecham/gulp-cmd-jst.svg?branch=master)](https://travis-ci.org/blue68/gulp-cmd-jst)
+gulp-cmd-jst [![Build Status](https://travis-ci.org/brucecham/gulp-cmd-jst.svg?branch=master)](https://travis-ci.org/brucecham/gulp-cmd-jst)
 ========
 
 Compile [lodash templates](http://lodash.com/docs#template) to a JST file using [gulp](https://github.com/wearefractal/gulp).
@@ -23,6 +23,7 @@ gulp.task('jst', function() {
     gulp.src('input/*.html')
         .pipe(jst({
                 cmd : true,
+                output: "html",//默认 返回可执行函数
                 prettify : true,
                 namespace : false
             }
