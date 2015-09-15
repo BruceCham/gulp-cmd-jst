@@ -23,13 +23,14 @@ gulp.task('jst', function() {
     gulp.src('input/*.html')
         .pipe(jst({
                 cmd : true,//cmd amd
-                output: "html",//默认 返回可执行函数
+                output: "html",//指定为html时，返回html片段，不指定时，返回可执行函数
                 prettify : true,//压缩为一行
                 namespace : false,
-				//设置underscore.js template分割符为{{ }}
-				evaluate: /##([\s\S]+?)##/g,
+                //设置underscore.js template分割符为{{ }}
+                evaluate: /##([\s\S]+?)##/g,
                 interpolate: /\{\{(.+?)\}\}/g,
                 escape: /\{\{\{\{-([\s\S]+?)\}\}\}\}/g
+				//设置分割符 over
             }
         ))
         .pipe(gulp.dest('./output'));
