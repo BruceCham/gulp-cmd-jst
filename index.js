@@ -3,6 +3,7 @@
 var compile = require('lodash').template;
 var gutil = require('gulp-util');
 var through = require('through2');
+var PluginError = gutil.PluginError;
 
 var PLUGIN_NAME = 'gulp-jst';
 
@@ -33,7 +34,7 @@ module.exports = function(options) {
         file.contents = new Buffer(fileContent);
         file.path = gutil.replaceExtension(file.path, ".js");
       } catch(err) {
-        this.emit('error', new gutil.PluginError(PLUGIN_NAME, err));
+        this.emit('error', new PluginError(PLUGIN_NAME, 'compile error:'+file.path));
       }
 
       this.push(file);
@@ -41,7 +42,7 @@ module.exports = function(options) {
     }
 
     if (file.isStream()) {
-      this.emit('error', new gutil.PluginError(PLUGIN_NAME, 'Streaming not supported.'));
+      this.emit('error', new gutil.PluginError(PLUGIN_NAME, 'Streaming not supported.'+file.path));
       return cb();
     }
   });
