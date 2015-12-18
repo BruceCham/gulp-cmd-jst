@@ -4,8 +4,7 @@ var compile = require('lodash').template;
 var gutil = require('gulp-util');
 var through = require('through2');
 var PluginError = gutil.PluginError;
-
-var PLUGIN_NAME = 'gulp-jst';
+var PLUGIN_NAME = 'gulp-cmd-jst';
 
 module.exports = function(options) {
   var options = options || {};
@@ -18,7 +17,18 @@ module.exports = function(options) {
       try {
         var fileContent = compile(file.contents.toString(), null, options).source;
         if( options.prettify){
-          fileContent = fileContent.replace(new RegExp('\n', 'g'), '');
+          fileContent = fileContent.replace(new RegExp('\n', 'g'), '')
+            .replace(/\\\\n+/gi, 'gulpjstvarbc9end')
+            .replace(/\\n+/gi, '')
+            .replace(/gulpjstvarbc9end/gi, '\\n')
+
+            .replace(/\\\\t+/gi, 'gulpjstvarbc9end')
+            .replace(/\\t+/gi, '')
+            .replace(/gulpjstvarbc9end/gi, '\\t')
+
+            .replace(/\\\\r+/gi, 'gulpjstvarbc9end')
+            .replace(/\\r+/gi, '')
+            .replace(/gulpjstvarbc9end/gi, '\\r');
         }
         if((options.cmd || options.amd) && options.namespace === false){
           if(options.output === "html"){

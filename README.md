@@ -30,7 +30,7 @@ gulp.task('jst', function() {
                 evaluate: /##([\s\S]+?)##/g,
                 interpolate: /\{\{(.+?)\}\}/g,
                 escape: /\{\{\{\{-([\s\S]+?)\}\}\}\}/g
-				//设置分割符 over
+                //设置分割符 over
             }
         ))
         .pipe(gulp.dest('./output'));
@@ -39,9 +39,10 @@ gulp.task('jst', function() {
 gulp.task('default', ['jst']);
 ```
 
-Note: This code is a gulp-jst revision
--------
+###Note: 版本 version
+* `0.1.4`:the code will remove escape character from lodash when setting 'prettify: true'
+* `0.1.4`:当设置 prettify: true时，jst代码压缩为一行，并去掉lodash转义过来的字符
 
 ### jst(options)
 
-`gulp-jst` accepts the [same _.template options](http://lodash.com/docs#template) as the lodash library.
+`gulp-cmd-jst` accepts the [same _.template options](http://lodash.com/docs#template) as the lodash library.
