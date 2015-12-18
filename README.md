@@ -40,8 +40,8 @@ gulp.task('default', ['jst']);
 ```
 
 ###Note: 版本 version
-* `0.1.4`:the code will remove escape character from lodash when setting 'prettify: true'
-* `0.1.4`:当设置 prettify: true时，jst代码压缩为一行，并去掉lodash转义过来的字符
+* `0.1.5`:the code will remove escape character from lodash when setting 'prettify: true'
+* `0.1.5`:当设置 prettify: true时，jst代码压缩为一行，并去掉lodash转义过来的字符
 
 ### jst(options)
 

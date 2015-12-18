@@ -1,6 +1,6 @@
 {
   "name": "gulp-cmd-jst",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "compile templates to a jst file.U can set output type html",
   "main": "index.js",
   "scripts": {

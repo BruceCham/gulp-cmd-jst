@@ -28,7 +28,9 @@ module.exports = function(options) {
 
             .replace(/\\\\r+/gi, 'gulpjstvarbc9end')
             .replace(/\\r+/gi, '')
-            .replace(/gulpjstvarbc9end/gi, '\\r');
+            .replace(/gulpjstvarbc9end/gi, '\\r')
+            
+            .replace(new RegExp('\\s{2,}','g'),'');
         }
         if((options.cmd || options.amd) && options.namespace === false){
           if(options.output === "html"){
