@@ -21,16 +21,21 @@ var jst = require('gulp-cmd-jst');
 
 gulp.task('jst', function() {
     gulp.src('input/*.html')
-        .pipe(jst({
-                cmd : true,//cmd amd
-                output: "html",//指定为html时，返回html片段，不指定时，返回可执行函数
-                prettify : true,//压缩为一行
-                namespace : false,
-                //设置underscore.js template分割符为{{ }}
-                evaluate: /##([\s\S]+?)##/g,
-                interpolate: /\{\{(.+?)\}\}/g,
-                escape: /\{\{\{\{-([\s\S]+?)\}\}\}\}/g
-                //设置分割符 over
+        .pipe(jst(
+            {
+                templateSettings: {
+                  evaluate: /##([\s\S]+?)##/g,
+                  interpolate: /\{\{(.+?)\}\}/g,
+                  escape: /\{\{\{\{-([\s\S]+?)\}\}\}\}/g
+                },
+                //filter escape character
+                processContent: function(src) {
+                  return src.replace(/(^\s+|\s+$)/gm, '');
+                },
+                //compress Jst
+                prettify: true, 
+                //cmd: true || amd: true        
+                cmd: true
             }
         ))
         .pipe(gulp.dest('./output'));
@@ -40,8 +45,9 @@ gulp.task('default', ['jst']);
 ```
 
 ###Note: 版本 version
-* `0.1.5`:the code will remove escape character from lodash when setting 'prettify: true'
-* `0.1.5`:当设置 prettify: true时，jst代码压缩为一行，并去掉lodash转义过来的字符
+* `0.1.5`: the code will remove escape character from lodash when setting 'prettify: true'
+* `0.1.5`: 当设置 prettify: true时，jst代码压缩为一行，并去掉lodash转义过来的字符
+* `0.1.6`: change settings options
 
 ### jst(options)
 

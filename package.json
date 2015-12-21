@@ -1,7 +1,7 @@
 {
   "name": "gulp-cmd-jst",
-  "version": "0.1.5",
-  "description": "compile templates to a jst file.U can set output type html",
+  "version": "0.1.6",
+  "description": "compile templates to a jst file for 'CMD' and 'AMD'.U can set output type html",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
@@ -11,7 +11,7 @@
     "jst-cmd",
     "jst-amd",
     "template",
-    "underscore",
+    "lodash",
     "jst"
   ],
   "dependencies": {

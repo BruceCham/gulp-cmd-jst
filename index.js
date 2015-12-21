@@ -1,13 +1,19 @@
 'use strict';
 
-var compile = require('lodash').template;
+var _ = require('lodash');
 var gutil = require('gulp-util');
 var through = require('through2');
 var PluginError = gutil.PluginError;
 var PLUGIN_NAME = 'gulp-cmd-jst';
 
 module.exports = function(options) {
-  var options = options || {};
+  var options = _.extend({
+      namespace: 'JST',
+      templateSettings: {},
+      processContent: function (src) { return src; },
+      processName: function(name){return name;}
+  },options);
+
   var stream = through.obj(function(file, enc, cb) {
     if (file.isNull()) {
       this.push(file);
@@ -15,24 +21,13 @@ module.exports = function(options) {
     }
     if (file.isBuffer()) {
       try {
-        var fileContent = compile(file.contents.toString(), null, options).source;
+        var fileContentSrc = options.processContent( file.contents.toString() );
+        var fileContent = _.template( fileContentSrc , null, options.templateSettings ).source;
         if( options.prettify){
-          fileContent = fileContent.replace(new RegExp('\n', 'g'), '')
-            .replace(/\\\\n+/gi, 'gulpjstvarbc9end')
-            .replace(/\\n+/gi, '')
-            .replace(/gulpjstvarbc9end/gi, '\\n')
-
-            .replace(/\\\\t+/gi, 'gulpjstvarbc9end')
-            .replace(/\\t+/gi, '')
-            .replace(/gulpjstvarbc9end/gi, '\\t')
-
-            .replace(/\\\\r+/gi, 'gulpjstvarbc9end')
-            .replace(/\\r+/gi, '')
-            .replace(/gulpjstvarbc9end/gi, '\\r')
-            
-            .replace(new RegExp('\\s{2,}','g'),'');
+          fileContent = fileContent.replace(new RegExp('\n', 'g'), '');
         }
-        if((options.cmd || options.amd) && options.namespace === false){
+        // filename = processName(filepath);
+        if(options.cmd || options.amd){
           if(options.output === "html"){
             fileContent = 'return ' + fileContent + '()';
           }else{
